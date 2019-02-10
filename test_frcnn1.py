@@ -15,6 +15,7 @@ from keras_frcnn import roi_helpers
 
 sys.setrecursionlimit(40000)
 newRow = ()
+imageName = ""
 
 parser = OptionParser()
 
@@ -153,6 +154,7 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 	if not img_name.lower().endswith(('.bmp', '.jpeg', '.jpg', '.png', '.tif', '.tiff')):
 		continue
 	print(img_name)
+	imageName = img_name
 	st = time.time()
 	filepath = os.path.join(img_path,img_name)
 
@@ -248,9 +250,11 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 	#cv2.imshow('img', img)
 	#cv2.waitKey(0)
 	cv2.imwrite('./results_imgs/{}.png'.format(idx),img)
-
+	
+	newRow = list(newRow)
+	newRow.insert(0,imageName)
 	with open('output.csv', 'a+') as csvFile:
 		writer = csv.writer(csvFile)
-		writer.writerow(list(newRow))
+		writer.writerow(newRow)
 
 	csvFile.close()
