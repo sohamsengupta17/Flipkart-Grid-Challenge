@@ -14,6 +14,7 @@ from keras.models import Model
 from keras_frcnn import roi_helpers
 
 sys.setrecursionlimit(40000)
+newRow = ()
 
 parser = OptionParser()
 
@@ -228,6 +229,7 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 			(x1, y1, x2, y2) = new_boxes[jk,:]
 
 			(real_x1, real_y1, real_x2, real_y2) = get_real_coordinates(ratio, x1, y1, x2, y2)
+			newRow = (real_x1, real_y1, real_x2, real_y2)
 
 			cv2.rectangle(img,(real_x1, real_y1), (real_x2, real_y2), (int(class_to_color[key][0]), int(class_to_color[key][1]), int(class_to_color[key][2])),2)
 
@@ -247,9 +249,8 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 	#cv2.waitKey(0)
 	cv2.imwrite('./results_imgs/{}.png'.format(idx),img)
 
-	row = [x,x+w,y,y+h]
-	with open('test.csv', 'a') as csvFile:
+	with open('output.csv', 'a+') as csvFile:
 		writer = csv.writer(csvFile)
-		writer.writerow(row)
+		writer.writerow(list(newRow))
 
 	csvFile.close()
