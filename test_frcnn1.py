@@ -248,9 +248,8 @@ for idx, img_name in enumerate(sorted(os.listdir(img_path))):
 	cv2.imwrite('./results_imgs/{}.png'.format(idx),img)
 
 	row = [x,x+w,y,y+h]
+	with open('test.csv', 'a') as csvFile:
+		writer = csv.writer(csvFile)
+		writer.writerow(row)
 
-        with open('test.csv', 'a') as csvFile:
-            writer = csv.writer(csvFile)
-            writer.writerow(row)
-
-        csvFile.close()
+	csvFile.close()
