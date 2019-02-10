@@ -1,2 +1,2 @@
 # Flipkart-Grid-Challenge
-Google Colab files and datasets for the Flipkart GRID ML Challenge
+Code files and datasets for the Flipkart GRID ML Challenge
